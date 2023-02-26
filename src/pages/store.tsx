@@ -13,11 +13,9 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import clsx from 'clsx';
 import produce from 'immer';
 import { useState } from 'react';
-// import Button from '@/components/button';
 import Error from '@/components/error';
 import Labels from '@/components/labels';
 import styles from './store.module.scss';
-// import { ListContextLoading } from '@/components/loading';
 import Pagination from '@/components/pgination';
 import { sortBy } from 'lodash';
 import { useRouter } from 'next/router';
@@ -88,7 +86,6 @@ export default function StorePage() {
       }
     }
   );
-  console.log(data, 'store page');
 
   let appLists: TAppInfo[] = [];
   if (data?.status === 200) {

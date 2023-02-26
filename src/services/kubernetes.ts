@@ -11,7 +11,7 @@ export type CRDMeta = {
 
 export function K8sApi(config: string): k8s.KubeConfig {
   const kc = new k8s.KubeConfig();
-  kc.loadFromString(config);
+  config ? kc.loadFromString(config) : kc.loadFromDefault();
 
   const cluster = kc.getCurrentCluster();
   if (cluster !== null) {

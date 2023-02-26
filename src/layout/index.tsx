@@ -1,49 +1,39 @@
-import styles from './index.module.scss';
+import useSessionStore from '@/stores/session';
 import { Nunito } from '@next/font/google';
 import clsx from 'clsx';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createSealosApp, sealosApp } from 'sealos-desktop-sdk';
+import styles from './index.module.scss';
 const nunito = Nunito({ subsets: ['latin'] });
 
 export default function Layout({ children }: any) {
+  const { setSession } = useSessionStore();
+  const [isLodaing, setIsLoading] = useState(true);
   useEffect(() => {
-    console.log('layout');
+    return createSealosApp({
+      appKey: 'sealos-image-hub'
+    });
   }, []);
-  // useEffect(() => {
-  //   createSealosApp({
-  //     appKey: 'App-Store'
-  //   });
-  //   return sealosApp.init();
-  // }, []);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     console.log(await sealosApp.getUserInfo());
-  //   })();
-  // }, []);
-  // const { init } = useAppStore((state) => state);
-  // const session = useSessionStore((s) => s.session);
+  useEffect(() => {
+    const initApp = async () => {
+      try {
+        const result = await sealosApp.getUserInfo();
+        setSession(result);
+      } catch (error) {}
+      setIsLoading(false);
+    };
 
-  // useEffect(() => {
-  //   (async () => {
-  //     // Initialize, get user information, install application information, etc.
-  //     await init();
-  //   })();
-  // }, [init]);
-
-  // useEffect(() => {
-  //   if (!window) {
-  //     return;
-  //   }
-  //   const sdk = new MasterSDK(session);
-  //   sdk.init();
-  // }, [session]);
+    initApp();
+  }, [isLodaing, setSession]);
 
   return (
-    <>
-      <div className={clsx(styles.desktopContainer, nunito.className)}>
-        <main className={clsx(styles.backgroundWrap, 'w-full h-full')}>{children}</main>
-      </div>
-    </>
+    <div className={clsx(styles.desktopContainer, nunito.className)}>
+      {isLodaing ? (
+        <div className={'w-full h-full flex items-center justify-center'}>loading</div>
+      ) : (
+        <div className={clsx(styles.backgroundWrap, 'w-full h-full')}>{children}</div>
+      )}
+    </div>
   );
 }

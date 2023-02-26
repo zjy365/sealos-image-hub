@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import 'github-markdown-css/github-markdown-light.css';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { stackoverflowLight, vs2015 } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+const { stackoverflowLight } = require('react-syntax-highlighter/dist/cjs/styles/hljs');
 import styles from './index.module.scss';
 
 type TMarkDown = {
@@ -27,7 +27,7 @@ const MarkDown = (props: TMarkDown) => {
               <SyntaxHighlighter
                 children={String(children).replace(/\n$/, '')}
                 showLineNumbers={true}
-                style={themeDark ? vs2015 : stackoverflowLight}
+                style={stackoverflowLight}
                 language={match[1]}
                 PreTag="div"
                 {...props}

@@ -1,7 +1,7 @@
 
 SERVICE_NAME=zhujingyang/sealos-image-hub
 # Image URL to use all building/pushing image targets
-IMG ?= $(SERVICE_NAME):0.1.0
+IMG ?= $(SERVICE_NAME):0.2.0
 
 .PHONY: all
 all: build
